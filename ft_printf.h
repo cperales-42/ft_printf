@@ -3,33 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diurno <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jgomez-d <jgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/29 10:15:58 by diurno            #+#    #+#             */
-/*   Updated: 2024/11/29 10:41:23 by diurno           ###   ########.fr       */
+/*   Created: 2024/12/04 15:16:48 by jgomez-d          #+#    #+#             */
+/*   Updated: 2024/12/04 22:35:28 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# include <stdarg.h>
-# include <stdlib.h>
+
 # include <unistd.h>
+# include <stdio.h>
+# include <stdarg.h>
 
-# define HEX_UPP_BASE "0123456789ABCDEF"
-# define HEX_LOW_BASE "0123456789abcdef"
-
-int		ft_printf(char const *str, ...);
-
-/* format functions */
-void	ft_putchar_pf(char c);
-void	ft_putstr_pf(char *str);
-void	ft_putnbr_pf(int num);
-void	ft_putuint_pf(unsigned int num, size_t *counter);
-void	ft_puthex_pf(unsigned int num, size_t *counter, char *base);
-void	ft_putptr_pf(void *ptr, size_t *counter);
-
-/* auxiliary functions */
-char	*ft_aux_pf(unsigned long long n, char *base);
+int		ft_printf(const char *format, ...);
+void	ft_putchar_pf(char c, int *counter);
+void	ft_putstr_pf(char *str, int *counter);
+void	ft_putnbr_pf(int n, int *counter);
+void	ft_putu_pf(unsigned int n, int *counter);
+void	ft_puthex_pf(unsigned long n, int *counter, const char base);
+void	ft_putptr(void *ptr, int *counter);
 
 #endif

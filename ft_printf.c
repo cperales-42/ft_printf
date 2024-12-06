@@ -3,44 +3,101 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diurno <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jgomez-d <jgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/29 09:45:31 by diurno            #+#    #+#             */
-/*   Updated: 2024/11/29 10:42:02 by diurno           ###   ########.fr       */
+/*   Created: 2024/12/02 01:15:38 by jorge             #+#    #+#             */
+/*   Updated: 2024/12/04 22:47:34 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-int	ft_printf(char const* fmt, ...)
-{
-	va_list args;
-	va_start(args, fmt);
-	size_t	i;
+//este es nuestro codigo
 
-	i = 0;
-	while (fmt[i])
+/*void	ft_print_pf(char *fmt, int *counter, va_list arglst)
+{
+	if (*fmt == 'c' || *fmt == '%')
+		ft_putchar_pf(va_arg(arglst, int), counter);
+	else if (*fmt == 's')
+		ft_putstr_pf(va_arg(arglst, char *), counter);
+	else if (*fmt == 'i' || *fmt == 'd')
+		ft_putnbr_pf(va_arg(arglst, int), counter);
+	else if (*fmt == 'u')
+		ft_putu_pf(va_arg(arglst, unsigned int), counter);
+	else if (*fmt == 'x' || *fmt == 'X')
+		ft_puthex_pf(va_arg(arglst, unsigned long), counter, *fmt);
+	else if (*fmt == 'p')
+		ft_putptr(va_arg(arglst, void *), counter);
+}
+
+int	ft_printf(const char *format, ...)
+{
+	va_list	arglst;
+	int		counter;
+	char	*fmt;
+
+	fmt = (counter = 0, (char *)format);
+	fmt--;
+	va_start(arglst, format);
+	while (*(++fmt))
+ 		if (*fmt++ != '%')
+			ft_putchar_pf(*fmt, &counter);
+		else 
+			ft_print_pf(fmt, &counter, arglst);
+	return (va_end(arglst), counter);
+}*/
+
+//este chatgpt
+
+void	ft_print_pf(char *fmt, int *counter, va_list arglst)
+{
+	if (*fmt == 'c')
+		ft_putchar_pf(va_arg(arglst, int), counter);
+	else if (*fmt == '%')
+		ft_putchar_pf('%', counter);
+	else if (*fmt == 's')
+		ft_putstr_pf(va_arg(arglst, char *), counter);
+	else if (*fmt == 'i' || *fmt == 'd')
+		ft_putnbr_pf(va_arg(arglst, int), counter);
+	else if (*fmt == 'u')
+		ft_putu_pf(va_arg(arglst, unsigned int), counter);
+	else if (*fmt == 'x' || *fmt == 'X')
+		ft_puthex_pf(va_arg(arglst, unsigned int), counter, *fmt);
+	else if (*fmt == 'p')
+		ft_putptr(va_arg(arglst, void *), counter);
+}
+
+int	ft_printf(const char *format, ...)
+{
+	va_list	arglst;
+	int		counter;
+	char	*fmt;
+
+	counter = 0;
+	fmt = (char *)format;
+	va_start(arglst, format);
+	while (*fmt)
 	{
-		if (fmt[i] == '%')
-		{
-			if (fmt[i + 1] == 'c')
-				ft_putchar_pf(va_arg(args, int));
-			else if (fmt[i + 1] == 's')
-				ft_putstr_pf(va_arg(args, char *));
-			else if (fmt[i + 1] == 'i')
-				ft_putnbr_pf(va_arg(args, char *));
-			i++;
-		}
+		if (*fmt != '%')
+			ft_putchar_pf(*fmt, &counter);
 		else
-			write(1, &fmt[i], 1);
-		i++;	
+		{
+			fmt++;
+			if (*fmt)
+				ft_print_pf(fmt, &counter, arglst);
+		}
+		fmt++;
 	}
-	va_end(args);
+	va_end(arglst);
+	return (counter);
 }
 
-int main(int argc, char** argv)
+/*int main()
 {
-	if (argc > 0)
-	{
-		ft_printf("Se escribira un string que metas mira: %s\n", argv[1]);
-	}
-}
+	int i = 42, j = 14	;
+	char *s;
+
+	s = "Hola Mundo";
+	j = ft_printf("%s  %d  %p  %x  %X", s, i, &i, j, j);
+	printf("\n %d \n", j);
+	return 0;
+}*/

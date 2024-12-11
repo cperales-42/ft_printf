@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 AR = ar 
 ARFLAGS = rcs
 NAME = libftprintf.a
-SOURCES = ft_putchar_pf.c ft_printf_utils.c ft_printf.c
+SOURCES = ft_printf_utils.c ft_printf.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
